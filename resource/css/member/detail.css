@@ -1,0 +1,61 @@
+h2 {
+	margin-bottom: 30px;
+	text-align: center;
+	font-size: 40px;
+}
+
+#information {
+	text-align: center;
+}
+
+#information input {
+	display: block;
+	font-size: 18px;
+	padding: 15px 60px;
+    color: #faf5e6;
+	background-color: transparent;
+	text-align: center;
+	border: none;
+	border-bottom: 1px solid #fbbd0dbf;
+	outline: none;
+	margin: 0 auto;
+}
+
+#information input:focus {
+	border-color: #fbbd0d;
+}
+
+#information p {
+	display: inline-block;
+	margin: 0 auto;
+}
+	
+#information #start_day {
+	font-size: 14px;
+	padding: 15px 0;
+	opacity: 0.8;
+	margin-bottom: 50px;
+}
+
+#information #button_box {
+	text-align: center;
+	margin-bottom: 150px;
+}	
+	
+#information button {
+	padding: 10px 15px;
+	background-color: transparent;
+    color: #faf5e6;
+    font-size: 18px;
+	border: 1px solid #faf5e64d;
+}
+
+#information button:hover {
+	transition: 0.2s;
+    color: #fbbd0d;
+	border: 1px solid #fbbd0d;
+}
+
+
+
+

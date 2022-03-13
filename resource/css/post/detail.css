@@ -1,0 +1,142 @@
+#post h2 {
+	color: #fbbd0d;
+}
+
+#post #date { 
+	opacity: 0.6;
+	font-size:12px;
+}
+
+#post #writer { 
+	float: right;
+}
+
+#post #content {
+	margin-top: 40px;
+	line-height: 35px;
+	white-space: pre-wrap;
+}
+
+#post:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+#modify_button, #delete_button, #like_button {
+	float: right;
+	padding: 5px 10px;
+	margin-left: 10px;
+	margin-bottom: 20px;
+	background-color: transparent;
+    color: #faf5e6;
+    font-size: 12px;
+	border: 1px solid #faf5e64d;
+	outline: none;
+}
+
+#modify_button:hover, #delete_button:hover, #like_button:hover {
+	transition: 0.2s;
+    color: #fbbd0d;
+	border: 1px solid #fbbd0d;
+}
+
+.like_active {
+    color: #fbbd0d;
+	border: 1px solid #fbbd0d;
+}
+
+
+
+
+#comment_area {
+	border-top: 1px solid #fbbd0d;
+	width: 100%;
+}
+
+#comment_area #comment_regist {
+	padding: 10px 0;
+}
+
+#comment_area #comment_regist:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+
+#comment_area #comment_regist #comment_regist_area, .comment_modifing_area {
+	width: 100%;
+	padding: 10px 15px;
+	resize: vertical;
+    color: #faf5e6;
+	background-color: transparent;
+	border-radius: none;
+	outline: none;
+}
+
+#comment_area #comment_regist #comment_regist_area:focus, .comment_modifing_area:focus {
+	border-color: #fbbd0dbf;
+}
+
+#comment_area #comment_regist #comment_regist_button {
+	display: none;
+}
+
+#comment_area #comment_regist #comment_regist_button, .comment_modifing_button, .comment_modifing_cancel_button {
+	margin-left: 5px;
+	padding: 8px 16px;
+	float: right;
+	background-color: transparent;
+    color: #faf5e6;
+	border: 1px solid #faf5e64d;
+	outline: none;
+}
+#comment_area #comment_regist #comment_regist_button:hover, .comment_modifing_button:hover, .comment_modifing_cancel_button:hover {
+	transition: 0.2s;
+    color: #fbbd0d;
+	border: 1px solid #fbbd0d;
+}
+
+#comment_area #comment_list .comment {
+	border-top: 1px solid #fbbd0d4d;
+	padding: 20px 0;
+}
+
+#comment_area #comment_list .comment h3 {
+	float: left;
+	color: #fbbd0d;
+}
+
+#comment_area #comment_list .comment .comment_date {
+	margin-bottom: 10px;
+	font-size: 12px;
+	opacity: 0.6;
+}
+
+#comment_area #comment_list .comment .comment_content_wrapper .comment_content {
+	white-space: pre-wrap;
+}
+
+#comment_area #comment_list .comment_delete_button {
+	margin-left: 5px;
+}
+
+#comment_area #comment_list .comment_delete_button, .comment_modify_button {
+	float: right;
+	background-color: transparent;
+    color: #faf5e6;
+	border: none;
+	outline: none;
+}
+
+#comment_area #comment_list .comment_delete_button:hover, .comment_modify_button:hover {
+	transition: 0.2s;
+    color: #fbbd0d;
+}
+
+#comment_area #comment_list .comment_modifing:after {
+	content: "";
+	display: table;
+	clear: both;
+}

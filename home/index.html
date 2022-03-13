@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>시루</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="../resource/css/common.css">
+  <script src="../resource/js/common.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="../resource/css/home/index.css">
+  <script src="../resource/js/home/index.js"></script>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="main">
+      <div id="welcome">
+        <h2><span class="color_yellow font_weight_bolder">시</span>와 <span class="color_yellow font_weight_bolder">글</span>이<br/>모이는 곳</h2>
+      </div>
+      <div id="banner">
+        <h2 class="color_yellow">000</h2>
+        <p>000</p>
+        <pre>
+          000
+        </pre>
+      </div>
+    </div>
+    <div id="best">
+      <h2>편의 작품, 개의 이야기.</h2>
+      <div id="best_poem">
+        <h3>공감 작품</h3>
+        <a href="/user/board/poem/detail?poem_id=0" class="post">
+          <span class="title"></span>
+          <span class="writer"></span>
+        </a>
+      </div>
+      <div id="best_story">
+        <h3>공감 이야기</h3>
+        <a href="/user/board/story/detail?story_id=0" class="post">
+          <span class="title"></span>
+          <span class="writer"></span>
+        </a>
+      </div>
+    </div>
+    <div id="intro">
+      <div id="birth">
+        <h4>시루는.</h4>
+        <p>
+          2021년 봄에 탄생한 시루는 <br/>
+          읽고 쓰기를 좋아하는 대학생이 만들었습니다.<br/>
+          <br/>
+          누구든 마음 속엔 작가를 품고 있습니다.<br/>
+          시루는 그 무대가 되고 싶습니다.<br/>
+          <br/>
+          지나가는 일상의 대화조차<br/>
+          어떤 이에겐 명작으로 그려질 수 있습니다.<br/>
+          글로 당신을 표현해보세요.<br/>
+        </p>
+      </div>
+      <div id="menual">
+        <h4>시루 사용법.</h4>
+        <p>
+          시루의 첫 화면은 짧은 글 한 편이 차지합니다.<br/>
+          읽어보며 하루를 정리해보세요.<br/>
+          <br/>
+          생각이 든다면<br/>
+          어떤 글이라도 상관 없습니다.<br/>
+          <br/> 
+          "글쓰기"를 눌러서 시작하세요.<br/>
+          상세한 방법은 버튼 안에 숨겨져있습니다.<br/>
+          <br/>
+          시루는 언제나 작가님 당신을 환영합니다.<br/>
+        </p>
+      </div>
+    </div>
+    <div id="start">
+      <h3>시작하세요.</h3>
+      <form id="login">
+        <h4 id="login_guide" class="font_size_25 margin_bottom_30">로그인</h4>
+        <input type="text" placeholder="아이디" maxlength="40" id="id_login" class="no_space no_special only_alphabet"/>
+        <input type="password" placeholder="비밀번호" maxlength="20" id="password_login" class="no_space only_alphabet"/>
+        <button id="login_button" type="button">시작</button>
+        <div id="find_area">
+          <a href="javascript:showChangePassword()">비밀번호 변경</a>
+          <div id="change_password">
+            <p id="change_guide">이메일로 인증문자를 받아 입력하고 비밀번호를 변경하세요.</p>
+            <input type="text" placeholder="해당 계정의 이메일" maxlength="40" id="email_change" class="only_alphabet"/>
+            <input type="text" placeholder="인증문자" maxlength="20" id="id_change"/>
+            <input type="password" placeholder="새 비밀번호" maxlength="20" id="password_change" class="no_space only_alphabet"/>
+            <input type="password" placeholder="새 비밀번호 확인" maxlength="20" id="repassword_change" class="no_space only_alphabet"/>
+            <button type="button" onclick="changePassword()">변경</button>
+          </div>
+        </div>
+      </form>
+      <form id="regist">
+        <h4 class="font_size_25 margin_bottom_30" id="regist_guide">가입</h4>
+        <input type="text" placeholder="이메일 (아이디로 사용)" maxlength="40" id="email_regist" class="no_space only_alphabet"/>
+        <input type="password" placeholder="비밀번호 (6~20)" maxlength="20" id="password_regist" class="no_space only_alphabet"/>
+        <input type="password" placeholder="비밀번호 확인" maxlength="20" id="repassword_regist" class="no_space only_alphabet"/>
+        <input type="text" placeholder="닉네임 (한글 1~20)" maxlength="20" id="nickname_regist" class="only_hangul"/>
+        <button id="regist_button" type="button">등록</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
+

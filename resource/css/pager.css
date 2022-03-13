@@ -1,0 +1,33 @@
+#page_box {
+	float: right;
+	position: relative;
+	left: -50%;
+	padding-bottom: 150px;
+}
+
+#page_box:after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.page {
+	float: left;
+	position: relative;
+	left: 50%;
+	padding: 5px 10px;
+	border: 1px solid #faf5e680;
+}
+
+.page:hover {
+	transition: 0.2s;
+	color: #fbbd0d;
+	border: 1px solid #fbbd0d;
+}
+
+.page_active {
+	color: #fbbd0d;
+	border: 1px solid #fbbd0d;
+}
+
+

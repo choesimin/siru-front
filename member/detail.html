@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>시루</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="../resource/css/common.css">
+  <script src="../resource/js/common.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="../resource/css/member/detail.css">
+  <script src="../resource/js/member/detail.js"></script>
+</head>
+<body>
+  <div id="wrapper">
+    <h2 id="information_guide">내 정보</h2>
+    <div id="information">
+      <input type="hidden" id="member_id" value="0"/>
+    
+      <input type="text" maxlength="20" id="nickname" class="only_hangul"/>
+
+      <input type="text" maxlength="20" id="id" class="no_space no_special only_alphabet"/>
+
+      <input type="password" id="password" maxlength="20" placeholder="비밀번호" class="no_space only_alphabet"/>
+      <input type="password" id="repassword" maxlength="20" placeholder="비밀번호 확인" class="no_space only_alphabet"/>
+
+      <input type="text" maxlength="40" id="email" class="no_space only_alphabet"/>
+
+      <p id="start_day"> 부터 시작하셨습니다.</p>
+
+      <div id="button_box">	
+        <button onclick="getInformation()">원래대로</button>
+        <button onclick="changeInformation()">변경</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

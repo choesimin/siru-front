@@ -1,0 +1,240 @@
+#main {
+  overflow: hidden;
+  margin-bottom: 250px;
+}
+
+#main:after {
+  display: table;
+  content: "";
+  clear: both;
+}
+
+#main #welcome h2 {
+  font-weight: bold;
+  font-size: 60px;
+  line-height: 100px;
+}
+
+#main #welcome p {
+  font-size: 20px;
+  line-height: 40px;
+}
+
+#main #banner {
+  float: right;
+  margin-top: 150px;
+  width: 40%;
+}
+
+#main #banner h2 {
+  font-size: 50px;
+  margin-bottom: 50px;
+}
+
+#main #banner p {
+  font-size: 16px;
+  opacity: 0.8;
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+#main #banner pre {
+  line-height: 50px;
+}
+
+
+
+#best {
+  overflow: hidden;
+  margin: auto;
+  margin-bottom: 250px;
+}
+
+#best:after {
+  display: table;
+  content: "";
+  clear: both;
+}
+
+#best h2 {
+  font-size: 40px;
+  margin-bottom: 120px;
+}
+
+#best h3 {
+  padding-bottom: 10px;
+}
+
+#best .post {
+  display: block;
+  padding: 10px;
+  border-top: 1px solid #fbbd0dbf;
+}
+
+#best .post:hover {
+  transition: 0.2s;
+  color: #fbbd0d;
+}
+
+#best .post .writer {
+  margin-left: 10px;
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+#best #best_poem, #best_story { 
+  width: 40%;
+  text-align: center;
+}
+
+#best #best_poem {
+  float: left;
+}
+
+#best #best_story {
+  float: right;
+}
+
+
+
+#intro {
+  overflow: hidden;
+  line-height: 40px;
+  margin-bottom: 250px;
+}
+
+#intro:after {
+  display: table;
+  content: "";
+  clear: both;
+}
+
+#intro h4 {
+  font-size: 30px;
+  margin-bottom: 50px;
+}
+
+#intro #birth {
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+#intro #menual {
+  width: 40%;
+  float: right;
+}
+
+
+
+#start {
+  height: 750px;
+  padding-top: 100px;
+  width: 100%;
+  text-align: center;
+}
+
+#start h3 {
+  font-size: 40px;
+  color: #faf5e6;
+  margin-bottom: 50px;
+}
+
+#start #login {
+  float: left;
+  width: 40%;
+}
+
+#start #regist {
+  float: right;
+  width: 40%;
+}
+
+#start input[type=text], #start input[type=password] {
+  font-size: 16px;
+  padding: 20px 0;
+  width: 100%;
+  color: #faf5e6;
+  background-color: transparent;
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid #fbbd0dbf;
+  outline: none;
+}
+
+#start input[type=text]:focus, #start input[type=password]:focus {
+  border-color: #fbbd0d;
+}
+
+#start button {
+  font-size: 16px;
+  padding: 20px 50px;
+  background-color: transparent;
+  color: #faf5e6;
+  border: none;
+  border-bottom: 1px solid #fbbd0dbf;
+  outline: none;
+}
+
+#start button:hover {
+  transition: 0.2s;
+  color: #fbbd0d;
+  border-color: #fbbd0d;
+}
+
+#start #login #find_area {
+  margin-top: 30px;
+}
+
+#start #login #find_area a:hover {
+  color: #fbbd0d;
+  transition: 0.2s;
+}
+
+#start #login #find_area #find_id {
+  display: none;
+  margin-bottom: 30px;
+}
+
+#start #login #find_area #change_password {
+  display: none;
+  margin-bottom: 30px;
+}
+
+#start #login #find_area #find_guide, #change_guide {
+  border: 1px solid #fbbd0dbf;
+  border-left: none;
+  border-right: none;
+  margin: 20px 0;
+  padding: 20px;
+}
+
+
+
+@media screen and (max-width: 800px) {
+  #main #banner {
+    margin-top: 150px;
+    width: 100%;
+  }
+
+  #best #best_poem, #best_story { 
+    width: 100%;
+  }
+  #best #best_poem {
+    margin-bottom: 80px;
+  }
+
+  #intro #menual {
+    width: 100%;
+    margin-top: 80px;
+  }
+  
+  #start #login, #start #regist {
+    width: 100%;
+  }
+  #start #login {
+    margin-bottom: 80px;
+  }
+  #start #regist {
+    margin-bottom: 150px;
+  }
+}
