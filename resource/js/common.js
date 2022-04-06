@@ -61,54 +61,77 @@ function logout() {
 
 
 function noSpace(obj) {
-  var str_space = /\s/;
-  if (str_space.exec(obj.value)) {
-    obj.focus();
-    obj.value = obj.value.replace(' ','');
-    return false;
-  }
+  obj.value = obj.value.replace(' ','');
 }
 
 function noSpecialSymbol(obj) {
-  var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi; 
-  if (regExp.test(obj.value)) {
-    obj.value = obj.value.substring(0, obj.value.length - 1 );
-  }
+  obj.value = obj.value.replace(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, '');
 }
 
 function onlyAlphabet(obj) {
-  obj.value = obj.value.replace(/[^\\!-z]/gi,"");
+  obj.value = obj.value.replace(/[^\\!-z]/gi, '');
 }
 
 function onlyHangul(obj) {
-  obj.value = obj.value.replace(/[a-z]/g, "");
+  obj.value = obj.value.replace(/[a-z]/g, '');
 };
 
-
-$(function() {
+window.onload = function() {
   addCommonElements();
 
-  $(".no_space").on("keyup paste", function() {
-    for (var i = 0; i < 50; i++) {
-      noSpace(this);
-    }
-  });
+  var noSpaceClasses = document.getElementsByClassName("no_space");
+  for (let j = 0; j < noSpaceClasses.length; j++) {
+    noSpaceClasses[j].addEventListener("keyup", function() {
+      for (let i = 0; i < 20; i++) {
+        noSpace(this);
+      }
+    });
+    noSpaceClasses[j].addEventListener("paste", function() {
+      for (let i = 0; i < 20; i++) {
+        noSpace(this);
+      }
+    });
+  }
 
-  $(".no_special").on("keyup paste", function() {
-    for (var i = 0; i < 50; i++) {
-      noSpecialSymbol(this);
-    }
-  });
+  var noSpecialClasses = document.getElementsByClassName("no_special");
+  for (let j = 0; j < noSpecialClasses.length; j++) {
+    noSpecialClasses[j].addEventListener("keyup", function() {
+      for (let i = 0; i < 20; i++) {
+        noSpecialSymbol(this);
+      }
+    });
+    noSpecialClasses[j].addEventListener("paste", function() {
+      for (let i = 0; i < 20; i++) {
+        noSpecialSymbol(this);
+      }
+    });
+  }
 
-  $(".only_alphabet").on("keyup paste", function() {
-    for (var i = 0; i < 50; i++) {
-      onlyAlphabet(this);
-    }
-  });
+  var onlyAlphabetClasses = document.getElementsByClassName("only_alphabet");
+  for (let j = 0; j < onlyAlphabetClasses.length; j++) {
+    onlyAlphabetClasses[j].addEventListener("keyup", function() {
+      for (let i = 0; i < 20; i++) {
+        onlyAlphabet(this);
+      }
+    });
+    onlyAlphabetClasses[j].addEventListener("paste", function() {
+      for (let i = 0; i < 20; i++) {
+        onlyAlphabet(this);
+      }
+    });
+  }
 
-  $(".only_hangul").on("keyup paste", function() {
-    for (var i = 0; i < 50; i++) {
-      onlyHangul(this);
-    }
-  });
-});
+  var onlyHangulClasses = document.getElementsByClassName("only_hangul");
+  for (let j = 0; j < onlyHangulClasses.length; j++) {
+    onlyHangulClasses[j].addEventListener("keyup", function() {
+      for (let i = 0; i < 20; i++) {
+        onlyHangul(this);
+      }
+    });
+    onlyHangulClasses[j].addEventListener("paste", function() {
+      for (let i = 0; i < 20; i++) {
+        onlyHangul(this);
+      }
+    });
+  }
+};
