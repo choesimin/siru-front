@@ -2,12 +2,10 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const hostname = '127.0.0.1';
-const port = 3000;
+const hostname = '0.0.0.0';
+const port = 10000;
 
 const server = http.createServer(function (request, response) {
-  console.log('request ', request.url);
-
   var filePath = '.' + request.url;
   if (filePath == './') {
     filePath = './home/index.html';

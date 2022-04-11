@@ -1,269 +1,330 @@
-function modifyStory() {
-	$("#story_form").attr({
-		action : "/user/board/story/modify/form",
-		method : "post"
-	});
-	$("#story_form").submit();		
+var memberId = sessionStorage.getItem('id');
+var postId = localStorage.getItem('postId');
+
+function init() {
+  fetchGet(url.post + '/' + postId)
+    .then(response => response.json())
+    .then(data => {
+      var post = document.getElementById('post');
+
+      var title = document.createElement('h2');
+      title.innerText = data.title;
+      post.appendChild(title);
+
+      var date = document.createElement('p');
+      date.setAttribute('id', 'date');
+      date.innerText = getKoreanDate(data.registDt);
+      post.appendChild(date);
+
+      var writer = document.createElement('p');
+      writer.setAttribute('id', 'writer');
+      writer.innerText = data.writer.name;
+      post.appendChild(writer);
+
+      var clearFix = document.createElement('div');
+      clearFix.setAttribute('class', 'clear_fix');
+      post.appendChild(clearFix);
+
+      var content = document.createElement('pre');
+      content.setAttribute('id', 'content');
+      content.innerText = data.content;
+      post.appendChild(content);
+
+      if (data.writer.id == memberId) {
+        var deleteButton = document.createElement('button');
+        deleteButton.setAttribute('id', 'delete_button');
+        deleteButton.innerText = '삭제';
+        deleteButton.setAttribute('onclick', 'deletePost()');
+        post.appendChild(deleteButton);
+
+        var modifyButton = document.createElement('button');
+        modifyButton.setAttribute('id', 'modify_button');
+        modifyButton.innerText = '수정';
+        modifyButton.setAttribute('onclick', 'goToModify()');
+        post.appendChild(modifyButton);
+      }
+
+      var empathyButton = document.createElement('button');
+      empathyButton.setAttribute('id', 'empathy_button');
+      empathyButton.innerText = '공감 ';
+      empathyButton.setAttribute('onclick', 'toggleEmpathy()');
+      post.appendChild(empathyButton);
+      setEmpathyButtonColor();
+
+      var empathyCount = document.createElement('span');
+      empathyCount.setAttribute('id', 'empathy_count');
+      empathyButton.appendChild(empathyCount);
+      getAndSetEmpathyCount();
+
+      if (data.category === 'poem') {
+        document.getElementById('comment_area').style.display = 'none';
+      } else {
+        renderComments();
+      }
+    });
+
+  if (isLoginMember()) {
+    document.getElementById('comment_regist').style.display = 'block';
+  }
+
 }
 
-function deleteStory() {
-	if (confirm("글을 지우시겠습니까?")) {
-		$("#story_form").attr({
-			action : "/user/board/story/delete",
-			method : "post"
-		});
-		$("#story_form").submit();	
-	}
+
+
+function goToModify() {
+  localStorage.setItem('postId', postId);
+  location.href = './modify.html';
 }
 
-function likePost() {
-	var member_id = $("#member_id");
-	var story_id = $("input[name=story_id]");
 
-	if (checkMemberLike() == true) {
-		$.ajax({
-			url : "/rest/story/like/cancel",
-			method : "post",
-			data : {
-				member_id : member_id.val(),
-				story_id : story_id.val()
-			},
-			success : function() {
-				getLike();
-			}
-		});
-	} else {
-		$.ajax({
-			url : "/rest/story/like",
-			method : "post",
-			data : {
-				member_id : member_id.val(),
-				story_id : story_id.val()
-			},
-			success : function() {
-				getLike();
-			}
-		});
-	}
+
+
+function toggleEmpathy() {
+  var empathyCount = parseInt(document.getElementById('empathy_count').innerText);
+
+  if (isLoginMember()) {
+    getMemberEmpathyCount()
+      .then(response => response.json())
+      .then(data => {
+        if (data > 0) {
+          fetchDelete(url.empathy, {postId: postId, memberId: memberId})
+            .then(response => {
+              if (response.ok) {
+                setEmpathyButtonColorNormal();
+                setEmpathyCount(empathyCount - 1);
+              } else {
+                alert('공감 취소에 실패했습니다.');
+              }
+            });
+        } else {
+          fetchPost(url.empathy, {postId: postId, memberId: memberId})
+            .then(response => {
+              if (response.ok) {
+                setEmpathyButtonColorHighlight();
+                setEmpathyCount(empathyCount + 1);
+              } else {
+                alert('공감 등록에 실패했습니다.');
+              }
+            });
+        }
+      });
+  }
 }
 
-function getLike() {
-	var story_id = $("input[name=story_id]").val();
-	var like_count = $("#like_count");
-	
-	$.ajax({
-		url : "/rest/story/like/count?story_id=" + story_id,
-		method : "get",
-		success : function(responseData) {
-			like_count.html(responseData);
-
-			chooseLikeButtonColor();
-		}
-	});
+function getAndSetEmpathyCount() {
+  getEmpathyCount()
+    .then(response => response.json())
+    .then(data => {
+      setEmpathyCount(data);
+    });
 }
 
-function checkMemberLike() {
-	var flag = false;
-
-	var member_id = $("#member_id");
-	var story_id = $("input[name=story_id]");
-	
-	$.ajax({
-		url : "/rest/story/like/check",
-		async : false,
-		method : "post",
-		data : {
-			member_id : member_id.val(),
-			story_id : story_id.val()
-		},
-		success : function(responseData) {
-			flag = responseData;
-		}
-	});
-	
-	return flag;
+function setEmpathyCount(count) {
+  document.getElementById('empathy_count').innerText = count;
 }
 
-function chooseLikeButtonColor() {
-	var like_button = $("#like_button");
-	
-	if (checkMemberLike() == true) {
-		like_button.css("color", "#fbbd0d");
-		like_button.css("border", "1px solid #fbbd0d");
-	} else {
-		like_button.css("color", "#faf5e6");
-		like_button.css("border", "1px solid #faf5e64d");
-	}
+function setEmpathyButtonColor() {
+  if (isLoginMember()) {
+    getMemberEmpathyCount()
+      .then(response => response.json())
+      .then(data => {
+        if (data > 0) {
+          setEmpathyButtonColorHighlight();
+        } else {
+          setEmpathyButtonColorNormal();
+        }
+      });
+  }
 }
 
+function setEmpathyButtonColorNormal() {
+  var empathyButton = document.getElementById('empathy_button');
+  empathyButton.style.color = '#faf5e6';
+  empathyButton.style.border = '1px solid #faf5e64d';
+}
+
+function setEmpathyButtonColorHighlight() {
+  var empathyButton = document.getElementById('empathy_button');
+  empathyButton.style.color = '#fbbd0d';
+  empathyButton.style.border = '1px solid #fbbd0d';
+}
+
+function getEmpathyCount() {
+  return fetchGet(url.post + '/' + postId + '/empathy/count');
+}
+
+function getMemberEmpathyCount() {
+  return fetchGet(url.post + '/' + postId + '/empathy/' + memberId + '/count');
+}
 
 
 
 
 function showCommentRegistButton() {
-	
-	$("#comment_regist_button").css("display", "block");
+  document.getElementById('comment_regist_button').style.display = 'block';
 }
 
-function hideCommentRegistButton() {
-	$("#comment_regist_button").css("display", "none");
+
+function isLoginMember() {
+  return memberId != undefined;
 }
+
+
+function deletePost() {
+  if (confirm('글을 지우시겠습니까?')) {
+    fetchDelete(url.post, {id: postId})
+      .then(response => {
+        if (response.ok) {
+          location.href = './list.html';
+        } else {
+          alert('삭제에 실패했습니다.');
+        }
+      });
+  }
+}
+
+
+
 
 function registComment() {
-	var member_id = $("#member_id");
-	var story_id = $("input[name=story_id]");
-	var comment = $("#comment_regist_area");
-	
-	if (comment.val() != "") {
-		$.ajax({
-			url : "/rest/comment/regist",
-			data : {
-				member_id : member_id.val(),
-				story_id : story_id.val(),
-				content : comment.val()
-			},
-			method : "post",
-			success : function() {
-				comment.val("");
-				loadCommentList();
-				hideCommentRegistButton();
-			}
-		});
-	} else {
-		comment.focus();
-	}
+  var content = document.getElementById('comment_regist_area');
+  if (content.value != '') {
+    fetchPost(url.comment, {postId: postId, memberId: memberId, content: content.value})
+      .then(response => {
+        if (response.ok) {
+          content.value = '';
+          renderComments()
+        } else {
+          alert('댓글 등록에 실패했습니다.');
+        }
+      });
+    content.placeholder = '댓글 남기기.';
+  } else {
+    content.placeholder = '내용을 입력해주세요.';
+    content.focus();
+  }
 }
 
-function deleteComment(obj) {
-	if (confirm("댓글을 지우시겠습니까?")) {
-		var comment_id = obj.value;
-		
-		$.ajax({
-			url : "/rest/comment/delete?comment_id=" + comment_id,
-			method : "get",
-			success : function() {
-				loadCommentList();
-			}
-		});
-	}
-}
+function renderComments() {
+  var commentList = document.getElementById('comment_list');
+  commentList.innerHTML = '';
 
-function modifyComment(obj) {
-	var comment_id = obj.value;
-	var content = obj.previousSibling;
-	
-	if (content.value != "") {
-		$.ajax({
-			url : "/rest/comment/modify",
-			method : "post",
-			data : {
-				comment_id : comment_id,
-				content : content.value
-			},
-			success : function() {
-				loadCommentList();
-			}
-		});
-	} else {
-		content.focus();
-	}
-}
+  fetchGet(url.post + '/' + postId + '/comment')
+    .then((response) => response.json())
+    .then((data) => {
+      var clearFix
+      var deleteButton;
+      var modifyButton;
+      var writer;
 
-function getComment(comment_id) {
-	var commentJson = {};
+      var registDt;
 
-	$.ajax({
-		url : "/rest/comment/get?comment_id=" + comment_id,
-		method : "get",
-		async: false,
-		success : function(responseData) {
-			commentJson = JSON.parse(responseData);
-		}
-	});
+      var contentWrapper;
+      var content;
 
-	return commentJson;
-}
+      for(i = 0; i < data.length; i++) {
+        comment = document.createElement('div');
+        comment.className = 'comment';
 
+        clearFix = document.createElement('div');
+        clearFix.className = 'clear_fix';
+        clearFix.style.width = '100%';
+        comment.appendChild(clearFix);
 
-function loadCommentList() {
-	var comment_list = $("#comment_list");
-	var story_id = $("input[name=story_id]");
-	var member_id = $("#member_id");
-	
-	$.ajax({
-		url : "/rest/comment/list",
-		data : {
-			story_id : story_id.val()
-		},
-		method : "get",
-		success : function(responseData) {
-			var responseJson = JSON.parse(responseData);
-			var tag = "";
+        if (memberId == data[i].writer.id) {
+          deleteButton = document.createElement('button');
+          deleteButton.className = 'comment_delete_button';
+          deleteButton.setAttribute('onclick', 'deleteComment(' + data[i].id + ')');
+          deleteButton.innerText = '×';
+          clearFix.appendChild(deleteButton);
 
-			for (var i = 0; i < responseJson.length; i++) {
-				tag += "<div class=\"comment\">";
-				
-				tag += "<div style=\"width: 100%\" class=\"clear_fix\">";
-				if (responseJson[i].member.member_id == member_id.val()) {
-					tag += "<button type=\"button\" value=\"" + responseJson[i].comment_id + "\" onclick=\"deleteComment(this)\" class=\"comment_delete_button\">×</button>";
-					tag += "<button type=\"button\" value=\"" + responseJson[i].comment_id + "\" onclick=\"showCommentModifingArea(this)\" class=\"comment_modify_button\">±</button>";
-				}
-				tag += "<h3>" + responseJson[i].member.nickname + "</h3>";
-				tag += "</div>";
+          modifyButton = document.createElement('button');
+          modifyButton.className = 'comment_modify_button';
+          modifyButton.setAttribute('onclick', 'showCommentModifingArea(this)');
+          modifyButton.innerText = '±';
+          clearFix.appendChild(modifyButton);
+        }
 
-				tag += "<p class=\"comment_date\">" + responseJson[i].date + "</p>";
+        writer = document.createElement('h3');
+        writer.innerText = data[i].writer.name;
+        clearFix.appendChild(writer);
 
-				tag += "<div class=\"comment_content_wrapper\">"
-				tag += "<pre class=\"comment_content\">" + responseJson[i].content + "</pre>";
-				tag += "</div>"
+        registDt = document.createElement('p');
+        registDt.className = 'comment_date';
+        registDt.innerText = getKoreanDate(data[i].registDt);
+        comment.appendChild(registDt);
 
-				tag += "</div>";
-				
-			}
-			
-			comment_list.html(tag);
-		}
-	});
+        contentWrapper = document.createElement('div');
+        contentWrapper.className = 'comment_content_wrapper';
+        contentWrapper.value = data[i].id;
+        comment.appendChild(contentWrapper);
+
+        content = document.createElement('pre');
+        content.className = 'comment_content';
+        content.innerText = data[i].content;
+        contentWrapper.appendChild(content);
+
+        commentList.appendChild(comment);
+      }
+    });
 }
 
 function showCommentModifingArea(obj) {
-	var comment_id = obj.value;
-	var comment = getComment(comment_id);
-	var comment_content_wrapper = obj.parentElement.parentElement.querySelector(".comment_content_wrapper");
-	
-	var tag = "";
-	tag += "<div class=\"comment_modifing\">";
-	tag += "<textarea class=\"comment_modifing_area\">" + comment.content + "</textarea>";
-	tag += "<button onclick=\"modifyComment(this)\" value=\"" + comment.comment_id + "\" class=\"comment_modifing_button\">수정</button>";
-	tag += "<button onclick=\"loadCommentList()\" class=\"comment_modifing_cancel_button\">취소</button>";
-	tag += "</div>";
-	
-	comment_content_wrapper.innerHTML = tag;
-	comment_content_wrapper.querySelector("textarea").focus();
+	var content = obj.parentNode.parentNode.getElementsByClassName('comment_content_wrapper')[0];
+
+  var wrapper = document.createElement('div');
+  wrapper.className = 'comment_modifing';
+
+  var textarea = document.createElement('textarea');
+  textarea.className = 'comment_modifing_area';
+  textarea.innerText = content.getElementsByClassName('comment_content')[0].innerText;
+  wrapper.appendChild(textarea);
+
+  var modifyButton = document.createElement('button');
+  modifyButton.className = 'comment_modifing_button';
+  modifyButton.innerText = '수정';
+
+  modifyButton.addEventListener('click', function() {
+    fetchPut(url.comment, {
+        id: content.value,
+        content: content.getElementsByClassName('comment_modifing_area')[0].value
+      })
+      .then((response) => {
+        if (response.ok) {
+          renderComments();
+        } else {
+          alert('댓글 수정에 실패했습니다.');
+        }
+      });
+  });
+  wrapper.appendChild(modifyButton);
+
+  var cancelButton = document.createElement('button');
+  cancelButton.className = 'comment_modifing_cancel_button';
+  cancelButton.innerText = '취소';
+  cancelButton.setAttribute('onclick', 'renderComments()');
+  wrapper.appendChild(cancelButton);
+
+  while (content.hasChildNodes()) content.removeChild(content.firstChild);
+  content.appendChild(wrapper);
+
+  textarea.focus();
+  textarea.setSelectionRange(textarea.value.length, textarea.value.length);
 }
 
+function deleteComment(id) {
+  if (confirm('댓글을 지우시겠습니까?')) {
+    fetchDelete(url.comment, {'id': id})
+      .then(response => {
+        if (response.ok) {
+          renderComments();
+        } else {
+          alert('댓글 삭제에 실패했습니다.');
+        }
+      });
+  }
+}
 
-
-$(function() {
-	loadCommentList();
-	getLike();
-	
-	$("#modify_button").on("click", function() {
-		modifyStory();
-	});
-
-	$("#delete_button").on("click", function() {
-		deleteStory();
-	});
-	
-	$("#comment_regist_button").on("click", function() {
-		registComment();
-	});
-	
-	$("#comment_regist_area").focusin(function() {
-		showCommentRegistButton();
-	});
-	
+window.addEventListener('load', function() {
+  init();
 });
-
-

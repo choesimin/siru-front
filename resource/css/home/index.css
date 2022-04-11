@@ -27,7 +27,7 @@
 }
 
 #main #banner h2 {
-  font-size: 50px;
+  font-size: 30px;
   margin-bottom: 50px;
 }
 
@@ -63,12 +63,13 @@
 
 #best h3 {
   padding-bottom: 10px;
+  border-bottom: 1px solid #fbbd0dbf;
 }
 
 #best .post {
   display: block;
   padding: 10px;
-  border-top: 1px solid #fbbd0dbf;
+  border-top: 1px solid #fbbd0d4d;
 }
 
 #best .post:hover {
@@ -180,34 +181,6 @@
   color: #fbbd0d;
   border-color: #fbbd0d;
 }
-
-#start #login #find_area {
-  margin-top: 30px;
-}
-
-#start #login #find_area a:hover {
-  color: #fbbd0d;
-  transition: 0.2s;
-}
-
-#start #login #find_area #find_id {
-  display: none;
-  margin-bottom: 30px;
-}
-
-#start #login #find_area #change_password {
-  display: none;
-  margin-bottom: 30px;
-}
-
-#start #login #find_area #find_guide, #change_guide {
-  border: 1px solid #fbbd0dbf;
-  border-left: none;
-  border-right: none;
-  margin: 20px 0;
-  padding: 20px;
-}
-
 
 
 @media screen and (max-width: 800px) {

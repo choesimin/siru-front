@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
   <link rel="stylesheet" type="text/css" href="../resource/css/common.css">
   <script src="../resource/js/common.js"></script>
 
@@ -16,26 +14,15 @@
 </head>
 <body>
   <div id="wrapper">
-    <div id="post">
-      <h2>제목</h2>
-      <p id="date">2022-00-00 12:12:12</p>
-      <p id="writer">작성자</p>
-      <div class="clear_fix"></div>
-      <pre id="content">
-000
-      </pre>
-      <button type="button" id="delete_button">삭제</button>
-      <button type="button" id="modify_button">수정</button>
-      <button type="button" id="like_button" onclick="likePost()"%>공감 <span id="like_count"></span></button>
-    </div>
+    <div id="post"></div>
     <div id="comment_area">
       <div id="comment_regist">
-        <textarea placeholder="댓글 남기기." id="comment_regist_area"></textarea>
-        <button id="comment_regist_button">댓글</button>
+        <textarea placeholder="댓글 남기기." id="comment_regist_area" onfocus="showCommentRegistButton()"></textarea>
+        <button id="comment_regist_button" onclick="registComment()">댓글</button>
       </div>
       <div id="comment_list"></div>
+      <div style="height: 100px;"></div>
     </div>
-    <div style="height: 100px;"></div>
   </div>
 </body>
 </html>

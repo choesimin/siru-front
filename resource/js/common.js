@@ -1,3 +1,25 @@
+var host = 'http://localhost:10001';
+var url = {
+  member: host + '/member',
+  post: host + '/post',
+  comment: host + '/comment',
+  empathy: host + '/empathy'
+}
+
+
+function logout() {
+  sessionStorage.clear();
+  location.href = '/';
+}
+
+function tokenIsExist() {
+  if (sessionStorage.getItem('token') === null || sessionStorage.getItem('id') === null) {
+    return false;
+  }
+  return true;
+}
+
+
 function addCommonElements() {
   var siru = document.createElement('h1');
   siru.setAttribute('id', 'siru');
@@ -6,7 +28,7 @@ function addCommonElements() {
 
   var write_button = document.createElement('a');
   write_button.setAttribute('id', 'write_button');
-  if (true) {
+  if (tokenIsExist()) {
     write_button.setAttribute('href', '../post/regist.html');
   } else {
     write_button.setAttribute('href', '/#start');
@@ -32,11 +54,11 @@ function addCommonElements() {
   nav.appendChild(nav_right);
 
   var nav_right_log_in_out = document.createElement('a');
-  if (true) {
-    nav_right_log_in_out.innerHTML = '시작';
-  } else {
+  if (tokenIsExist()) {
     nav_right_log_in_out.innerHTML = '나가기';
     nav_right_log_in_out.setAttribute('onclick', 'logout()');
+  } else {
+    nav_right_log_in_out.innerHTML = '시작';
   }
   nav_right_log_in_out.setAttribute('href', '/#start');
   nav_right.appendChild(nav_right_log_in_out);
@@ -44,20 +66,24 @@ function addCommonElements() {
   var nav_right_story = document.createElement('a');
   nav_right_story.setAttribute('href', '../post/list.html');
   nav_right_story.innerHTML = '이야기';
+  nav_right_story.addEventListener('click', function() {
+    localStorage.setItem('category', 'story');
+  });
   nav_right.appendChild(nav_right_story);
 
   var nav_right_poem = document.createElement('a');
   nav_right_poem.setAttribute('href', '../post/list.html');
   nav_right_poem.innerHTML = '작품';
+  nav_right_poem.addEventListener('click', function() {
+    localStorage.setItem('category', 'poem');
+  });
   nav_right.appendChild(nav_right_poem);
 }
 
-
-function logout() {
-  console.log('logout');
-  localStorage.removeItem('token');
-  localStorage.removeItem('memberId');
+function hideWriteButton() {
+  document.getElementById('write_button').style.display = 'none';
 }
+
 
 
 function noSpace(obj) {
@@ -65,7 +91,7 @@ function noSpace(obj) {
 }
 
 function noSpecialSymbol(obj) {
-  obj.value = obj.value.replace(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, '');
+  obj.value = obj.value.replace(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\'\\\(\=]/gi, '');
 }
 
 function onlyAlphabet(obj) {
@@ -76,62 +102,106 @@ function onlyHangul(obj) {
   obj.value = obj.value.replace(/[a-z]/g, '');
 };
 
-window.onload = function() {
+
+
+
+function fetchGet(url) {
+  return fetch(url);
+}
+
+function fetchPost(url, data) {
+  return fetch(url, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  });
+}
+
+function fetchPut(url, data) {
+  return fetch(url, {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  });
+}
+
+function fetchDelete(url, data) {
+  return fetch(url, {
+    method: 'DELETE',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  });
+}
+
+
+
+function getKoreanDate(str) {
+  var date = new Date(str);
+
+  return date.getFullYear() + '년 '
+    + date.getMonth() + '월 '
+    + date.getDate() + '일 '
+    + date.getHours() + '시 '
+    + date.getMinutes() + '분 ';
+}
+
+
+window.addEventListener('load', function() {
   addCommonElements();
 
-  var noSpaceClasses = document.getElementsByClassName("no_space");
+  var noSpaceClasses = document.getElementsByClassName('no_space');
   for (let j = 0; j < noSpaceClasses.length; j++) {
-    noSpaceClasses[j].addEventListener("keyup", function() {
+    noSpaceClasses[j].addEventListener('keyup', function() {
       for (let i = 0; i < 20; i++) {
         noSpace(this);
       }
     });
-    noSpaceClasses[j].addEventListener("paste", function() {
+    noSpaceClasses[j].addEventListener('paste', function() {
       for (let i = 0; i < 20; i++) {
         noSpace(this);
       }
     });
   }
 
-  var noSpecialClasses = document.getElementsByClassName("no_special");
+  var noSpecialClasses = document.getElementsByClassName('no_special');
   for (let j = 0; j < noSpecialClasses.length; j++) {
-    noSpecialClasses[j].addEventListener("keyup", function() {
+    noSpecialClasses[j].addEventListener('keyup', function() {
       for (let i = 0; i < 20; i++) {
         noSpecialSymbol(this);
       }
     });
-    noSpecialClasses[j].addEventListener("paste", function() {
+    noSpecialClasses[j].addEventListener('paste', function() {
       for (let i = 0; i < 20; i++) {
         noSpecialSymbol(this);
       }
     });
   }
 
-  var onlyAlphabetClasses = document.getElementsByClassName("only_alphabet");
+  var onlyAlphabetClasses = document.getElementsByClassName('only_alphabet');
   for (let j = 0; j < onlyAlphabetClasses.length; j++) {
-    onlyAlphabetClasses[j].addEventListener("keyup", function() {
+    onlyAlphabetClasses[j].addEventListener('keyup', function() {
       for (let i = 0; i < 20; i++) {
         onlyAlphabet(this);
       }
     });
-    onlyAlphabetClasses[j].addEventListener("paste", function() {
+    onlyAlphabetClasses[j].addEventListener('paste', function() {
       for (let i = 0; i < 20; i++) {
         onlyAlphabet(this);
       }
     });
   }
 
-  var onlyHangulClasses = document.getElementsByClassName("only_hangul");
+  var onlyHangulClasses = document.getElementsByClassName('only_hangul');
   for (let j = 0; j < onlyHangulClasses.length; j++) {
-    onlyHangulClasses[j].addEventListener("keyup", function() {
+    onlyHangulClasses[j].addEventListener('keyup', function() {
       for (let i = 0; i < 20; i++) {
         onlyHangul(this);
       }
     });
-    onlyHangulClasses[j].addEventListener("paste", function() {
+    onlyHangulClasses[j].addEventListener('paste', function() {
       for (let i = 0; i < 20; i++) {
         onlyHangul(this);
       }
     });
   }
-};
+});

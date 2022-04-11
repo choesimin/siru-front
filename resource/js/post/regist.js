@@ -1,55 +1,48 @@
-var flag = null;
+var category = '';
 
-function regist() {
-	var title = $("input[name='title'");
-	var content = $("textarea[name='content'");
+function init() {
+  var poem = document.getElementById('poem_mode');
+  var story = document.getElementById('story_mode');
 
-	if (title.val() == "") {
-		title.focus();
-	} else if (content.val() == "") {
-		content.focus();
-	} else {
-		if (flag == true) {
-			$("#write_form").attr({
-				action : "/user/board/poem/regist",
-				method : "post"
-			});
-			$("#write_form").submit();
-		} else if (flag == false) {
-			$("#write_form").attr({
-				action : "/user/board/story/regist",
-				method : "post"
-			});
-			$("#write_form").submit();
-		} else {
-			$("#regist_button").html("선택 필수");
-		}
-	}
+  poem.addEventListener('mousedown', function() {
+    poem.style.backgroundColor = '#fbbd0d40';
+    story.style.backgroundColor = 'transparent';
+    category = 'poem';
+  });
+
+  story.addEventListener('mousedown', function() {
+    poem.style.backgroundColor = 'transparent';
+    story.style.backgroundColor = '#fbbd0d40';
+    category = 'story';
+  });
+
+  hideWriteButton();
 }
 
-$(function(){
-	$("#poem_mode").mousedown(function() {
-		$("#poem_mode").css("background-color","#fbbd0d40");
-		$("#story_mode").css("background-color","transparent");
-		
-		flag = true;
-	});
-	
-	$("#story_mode").mousedown(function() {
-		$("#story_mode").css("background-color","#fbbd0d40");
-		$("#poem_mode").css("background-color","transparent");
-		
-		flag = false;
-	});
-	
-	$("#regist_button").click(function() {
-		regist();
-	});
-	
-	$('input[type="text"]').keydown(function(event) {
-		if (event.keyCode == 13) {
-			event.preventDefault();
-		}
-	});
+function register() {
+  var title = document.getElementById('title');
+  var content = document.getElementById('content');
+  var registButton = document.getElementById('regist_button');
 
+  if (title.value == '') {
+    title.focus();
+  } else if (content.value == '') {
+    content.focus();
+  } else if (category != 'poem' && category != 'story') {
+    registButton.innerText = '선택하세요.';
+  } else {
+    fetchPost(url.post, {memberId: sessionStorage.getItem('id'), category: category, title: title.value, content: content.value})
+      .then(response => {
+        if (response.ok) {
+          localStorage.setItem('category', category);
+          location.href = '../post/list.html';
+        } else {
+          registButton.innerText = '게시에 실패했습니다.';
+        }
+      });
+  }
+}
+
+window.addEventListener('load', function() {
+  init();
 });
