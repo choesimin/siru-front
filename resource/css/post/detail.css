@@ -23,7 +23,7 @@
 	clear: both;
 }
 
-#modify_button, #delete_button, #like_button {
+#modify_button, #delete_button, #empathy_button {
 	float: right;
 	padding: 5px 10px;
 	margin-left: 10px;
@@ -35,13 +35,13 @@
 	outline: none;
 }
 
-#modify_button:hover, #delete_button:hover, #like_button:hover {
+#modify_button:hover, #delete_button:hover, #empathy_button:hover {
 	transition: 0.2s;
     color: #fbbd0d;
 	border: 1px solid #fbbd0d;
 }
 
-.like_active {
+.empathy_active {
     color: #fbbd0d;
 	border: 1px solid #fbbd0d;
 }
@@ -55,6 +55,7 @@
 }
 
 #comment_area #comment_regist {
+	display: none;
 	padding: 10px 0;
 }
 

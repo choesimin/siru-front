@@ -6,8 +6,6 @@ const hostname = '127.0.0.1';
 const port = 3000;
 
 const server = http.createServer(function (request, response) {
-  console.log('request ', request.url);
-
   var filePath = '.' + request.url;
   if (filePath == './') {
     filePath = './home/index.html';

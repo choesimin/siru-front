@@ -181,34 +181,6 @@
   border-color: #fbbd0d;
 }
 
-#start #login #find_area {
-  margin-top: 30px;
-}
-
-#start #login #find_area a:hover {
-  color: #fbbd0d;
-  transition: 0.2s;
-}
-
-#start #login #find_area #find_id {
-  display: none;
-  margin-bottom: 30px;
-}
-
-#start #login #find_area #change_password {
-  display: none;
-  margin-bottom: 30px;
-}
-
-#start #login #find_area #find_guide, #change_guide {
-  border: 1px solid #fbbd0dbf;
-  border-left: none;
-  border-right: none;
-  margin: 20px 0;
-  padding: 20px;
-}
-
-
 
 @media screen and (max-width: 800px) {
   #main #banner {

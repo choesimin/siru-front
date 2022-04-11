@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
   <link rel="stylesheet" type="text/css" href="../resource/css/common.css">
   <script src="../resource/js/common.js"></script>
 
@@ -78,31 +76,20 @@
     </div>
     <div id="start">
       <h3>시작하세요.</h3>
-      <form id="login">
+      <div id="login">
         <h4 id="login_guide" class="font_size_25 margin_bottom_30">로그인</h4>
-        <input type="text" placeholder="아이디" maxlength="40" id="id_login" class="no_space no_special only_alphabet"/>
-        <input type="password" placeholder="비밀번호" maxlength="20" id="password_login" class="no_space only_alphabet"/>
-        <button id="login_button" type="button">시작</button>
-        <div id="find_area">
-          <a href="javascript:showChangePassword()">비밀번호 변경</a>
-          <div id="change_password">
-            <p id="change_guide">이메일로 인증문자를 받아 입력하고 비밀번호를 변경하세요.</p>
-            <input type="text" placeholder="해당 계정의 이메일" maxlength="40" id="email_change" class="only_alphabet"/>
-            <input type="text" placeholder="인증문자" maxlength="20" id="id_change"/>
-            <input type="password" placeholder="새 비밀번호" maxlength="20" id="password_change" class="no_space only_alphabet"/>
-            <input type="password" placeholder="새 비밀번호 확인" maxlength="20" id="repassword_change" class="no_space only_alphabet"/>
-            <button type="button" onclick="changePassword()">변경</button>
-          </div>
-        </div>
-      </form>
-      <form id="regist">
+        <input type="text" value="test01@gmail.com" placeholder="아이디" maxlength="45" id="email_login" class="no_space only_alphabet"/>
+        <input type="password" value="test01" placeholder="비밀번호" maxlength="20" id="password_login" class="no_space only_alphabet"/>
+        <button type="button" onclick="login()" id="login_button">시작</button>
+      </div>
+      <div id="regist">
         <h4 class="font_size_25 margin_bottom_30" id="regist_guide">가입</h4>
-        <input type="text" placeholder="이메일 (아이디로 사용)" maxlength="40" id="email_regist" class="no_space only_alphabet"/>
-        <input type="password" placeholder="비밀번호 (6~20)" maxlength="20" id="password_regist" class="no_space only_alphabet"/>
-        <input type="password" placeholder="비밀번호 확인" maxlength="20" id="repassword_regist" class="no_space only_alphabet"/>
-        <input type="text" placeholder="닉네임 (한글 1~20)" maxlength="20" id="nickname_regist" class="only_hangul"/>
-        <button id="regist_button" type="button">등록</button>
-      </form>
+        <input type="text" value="test01@gmail.com" placeholder="이메일 (아이디로 사용)" maxlength="50" id="email_regist" class="no_space only_alphabet"/>
+        <input type="password" value="test01" placeholder="비밀번호 (6~20)" maxlength="20" id="password_regist" class="no_space only_alphabet"/>
+        <input type="password" value="test01" placeholder="비밀번호 확인" maxlength="20" id="repassword_regist" class="no_space only_alphabet"/>
+        <input type="text" value="테스트" placeholder="닉네임 (한글 1~10)" maxlength="10" id="name_regist" class="only_hangul"/>
+        <button type="button" onclick="register()" id="regist_button">등록</button>
+      </div>
     </div>
   </div>
 </body>
