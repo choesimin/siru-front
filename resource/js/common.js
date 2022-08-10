@@ -1,4 +1,4 @@
-var host = 'http://localhost:10001';
+var host = 'http://siru.community:10001';
 var url = {
   member: host + '/member',
   post: host + '/post',
