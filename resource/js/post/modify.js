@@ -8,7 +8,7 @@ function init() {
       title.value = data.title;
 
       var content = document.getElementById('content');
-      content.innerText = data.content;
+      content.innerHTML = data.content;
     });
 
   hideWriteButton();
