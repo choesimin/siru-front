@@ -7,11 +7,6 @@ var url = {
 }
 
 
-function logout() {
-  sessionStorage.clear();
-  location.href = '/';
-}
-
 function tokenIsExist() {
   if (sessionStorage.getItem('token') === null || sessionStorage.getItem('id') === null) {
     return false;
@@ -29,11 +24,12 @@ function addCommonElements() {
   var write_button = document.createElement('a');
   write_button.setAttribute('id', 'write_button');
   if (tokenIsExist()) {
+    write_button.innerHTML = '글쓰기';
     write_button.setAttribute('href', '../post/regist.html');
   } else {
+    write_button.innerHTML = '시작';
     write_button.setAttribute('href', '/#start');
   }
-  write_button.innerHTML = '글쓰기';
   document.body.prepend(write_button);
 
   var nav = document.createElement('div');
@@ -52,16 +48,6 @@ function addCommonElements() {
   var nav_right = document.createElement('div');
   nav_right.setAttribute('id', 'nav_right');
   nav.appendChild(nav_right);
-
-  var nav_right_log_in_out = document.createElement('a');
-  if (tokenIsExist()) {
-    nav_right_log_in_out.innerHTML = '나가기';
-    nav_right_log_in_out.setAttribute('onclick', 'logout()');
-  } else {
-    nav_right_log_in_out.innerHTML = '시작';
-  }
-  nav_right_log_in_out.setAttribute('href', '/#start');
-  nav_right.appendChild(nav_right_log_in_out);
 
   var nav_right_story = document.createElement('a');
   nav_right_story.setAttribute('href', '../post/list.html');
