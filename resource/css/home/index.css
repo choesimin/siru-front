@@ -129,7 +129,6 @@
 
 
 #start {
-  height: 750px;
   padding-top: 100px;
   width: 100%;
   text-align: center;
@@ -202,13 +201,12 @@
     margin-top: 80px;
   }
   
-  #start #login, #start #regist {
-    width: 100%;
-  }
   #start #login {
+    width: 100%;
     margin-bottom: 80px;
   }
+
   #start #regist {
-    margin-bottom: 150px;
+    width: 100%;
   }
 }

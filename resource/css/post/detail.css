@@ -13,15 +13,9 @@
 
 #post #content {
 	margin-top: 40px;
+	margin-bottom: 80px;
 	line-height: 35px;
 	white-space: pre-wrap;
-}
-
-#post:after {
-	content: "";
-	padding-bottom: 100px;
-	display: table;
-	clear: both;
 }
 
 #modify_button, #delete_button, #empathy_button {

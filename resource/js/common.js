@@ -64,6 +64,10 @@ function addCommonElements() {
     localStorage.setItem('category', 'poem');
   });
   nav_right.appendChild(nav_right_poem);
+
+  var bottom = document.createElement('div');
+  bottom.style.height = '150px';
+  document.getElementById('wrapper').appendChild(bottom);
 }
 
 function hideWriteButton() {
