@@ -1,10 +1,4 @@
 function init() {
-  document.getElementById('password_login').addEventListener('keyup', function(e) {
-    if(e.keyCode == 13) {
-      login();
-    }
-  });
-
   if (tokenIsExist()) {
     document.getElementById('intro').style.display = 'none';
     document.getElementById('start').style.display = 'none';
