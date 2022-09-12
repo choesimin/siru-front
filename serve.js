@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const hostname = '0.0.0.0';
-const port = 10000;
+const port = 80;
 
 const server = http.createServer(function (request, response) {
   var filePath = '.' + request.url;
