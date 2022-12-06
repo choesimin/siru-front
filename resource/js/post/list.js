@@ -1,7 +1,9 @@
+var page = 0;
+
 function getPosts() {
   var category = localStorage.getItem('category');
 
-  fetchGet(url.post + '/category/' + category)
+  fetchGet(url.post + '/category/' + category + '?page=' + page)
     .then(response => response.json())
     .then(data => {
       var grid = document.getElementById('grid');
@@ -27,6 +29,8 @@ function getPosts() {
       }
 
       resizeAllGridItems();
+
+      page++;
     });
 }
 
@@ -74,4 +78,13 @@ window.addEventListener('load', function() {
   setBoardTitle();
 
   window.addEventListener('resize', resizeAllGridItems);
+
+  window.addEventListener('scroll', function() {
+    const scrolledHeight = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentTotalHeight = document.body.offsetHeight;
+    const isBottom = windowHeight + scrolledHeight === documentTotalHeight;
+  
+    if (isBottom) getPosts();
+  });
 });
