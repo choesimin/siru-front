@@ -6,31 +6,35 @@ function getPosts() {
   fetchGet(url.post + '/category/' + category + '?page=' + page)
     .then(response => response.json())
     .then(data => {
-      var grid = document.getElementById('grid');
-      var item, content, title, writer;
-      for (var i = 0; i < data.length; i++) {
-        item = document.createElement('div');
-        item.className = 'item';
+      if (data.length === 0) {
+        document.getElementById("more").style.display = 'none';
+      } else {
+        var grid = document.getElementById('grid');
+        var item, content, title, writer;
+        for (var i = 0; i < data.length; i++) {
+          item = document.createElement('div');
+          item.className = 'item';
 
-        content = document.createElement('div');
-        content.className = 'content';
-        content.setAttribute('onclick', 'detail(' + data[i].id + ')');
+          content = document.createElement('div');
+          content.className = 'content';
+          content.setAttribute('onclick', 'detail(' + data[i].id + ')');
 
-        title = document.createElement('h3');
-        title.textContent = data[i].title;
-        content.append(title);
+          title = document.createElement('h3');
+          title.textContent = data[i].title;
+          content.append(title);
 
-        writer = document.createElement('p');
-        writer.textContent = data[i].writer.name;
-        content.append(writer);
+          writer = document.createElement('p');
+          writer.textContent = data[i].writer.name;
+          content.append(writer);
 
-        item.append(content);
-        grid.append(item);
+          item.append(content);
+          grid.append(item);
+        }
+
+        resizeAllGridItems();
+
+        page++;
       }
-
-      resizeAllGridItems();
-
-      page++;
     });
 }
 
@@ -78,13 +82,4 @@ window.addEventListener('load', function() {
   setBoardTitle();
 
   window.addEventListener('resize', resizeAllGridItems);
-
-  window.addEventListener('scroll', function() {
-    const scrolledHeight = window.scrollY;
-    const windowHeight = window.innerHeight;
-    const documentTotalHeight = document.body.offsetHeight;
-    const isBottom = windowHeight + scrolledHeight === documentTotalHeight;
-  
-    if (isBottom) getPosts();
-  });
 });

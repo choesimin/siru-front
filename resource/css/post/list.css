@@ -36,3 +36,19 @@
 .content p {
 	font-size: 12px;
 }
+
+#more {
+	width: 100%;
+	margin-top : 40px;
+	padding : 20px;
+	border: 1px solid #fbbd0dbf;
+	color: inherit;
+	background-color: inherit;
+	font-size: 20px;
+}
+
+#more:hover {
+	color: #fbbd0d;
+	border: 1px solid #fbbd0d;
+	transition: 0.2s;
+}
