@@ -42,10 +42,10 @@ export class BounceString {
 
     animate(ctx, moveX, moveY) {
 
-        ctx.beginPath();
-        ctx.fillStyle = '#ff00ff';
-        ctx.arc(moveX, moveY, 20, 0, Math.PI * 2, false);
-        ctx.fill();
+        // ctx.beginPath();
+        // ctx.fillStyle = '#ff00ff';
+        // ctx.arc(moveX, moveY, 20, 0, Math.PI * 2, false);
+        // ctx.fill();
 
         ctx.beginPath();
         ctx.strokeStyle = this.color;

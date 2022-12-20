@@ -17,7 +17,7 @@ class App {
         window.addEventListener('resize', this.resize.bind(this), false);
         this.resize();
 
-        this.ball = new Ball(this.stageWidth, this.stageHeight, 70, 6);
+        // this.ball = new Ball(this.stageWidth, this.stageHeight, 70, 6);
 
         document.addEventListener('pointerdown', this.onDown.bind(this), false);
         document.addEventListener('pointermove', this.onMove.bind(this), false);
@@ -35,7 +35,7 @@ class App {
         this.ctx.scale(this.pixelRatio, this.pixelRatio);
 
         const xGap = 20;
-        const yGap = 20;
+        const yGap = 100;
         const x1 = xGap;
         const x2 = this.stageWidth - xGap;
         const total = Math.floor((this.stageHeight - yGap) / yGap);
@@ -50,7 +50,7 @@ class App {
                     x2: x2,
                     y2: i * yGap + yGap
                 },
-                '#ff5038'
+                '#fbbd0d'
             )
         }
 
@@ -63,8 +63,8 @@ class App {
 
         if (this.strings.length > 0) {
             for (let i = 0; i < this.strings.length; i++) {
-                // this.strings[i].animate(this.ctx, this.moveX, this.moveY);
-                this.strings[i].animate(this.ctx, this.ball.x, this.ball.y);
+                this.strings[i].animate(this.ctx, this.moveX, this.moveY);
+                // this.strings[i].animate(this.ctx, this.ball.x, this.ball.y);
             }
         }
 
@@ -90,8 +90,6 @@ class App {
         this.moveX = -5000;
         this.moveY = -5000;
     }
-
-
 
 }
 
