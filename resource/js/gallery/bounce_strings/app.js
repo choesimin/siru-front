@@ -35,7 +35,7 @@ class App {
         this.ctx.scale(this.pixelRatio, this.pixelRatio);
 
         const xGap = 20;
-        const yGap = 100;
+        const yGap = 80;
         const x1 = xGap;
         const x2 = this.stageWidth - xGap;
         const total = Math.floor((this.stageHeight - yGap) / yGap);
@@ -50,7 +50,7 @@ class App {
                     x2: x2,
                     y2: i * yGap + yGap
                 },
-                '#fbbd0d'
+                '#777777'
             )
         }
 
